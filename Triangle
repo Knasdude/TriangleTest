@@ -1,0 +1,83 @@
+package org.example;
+import java.util.Arrays;
+
+/**
+ * Abstract class representing a triangle
+ * Stores the coordinates of the three points and provides methods for calculations.
+ */
+public abstract class Triangle implements Shape{
+    Point point1;
+    Point point2;
+    Point point3;
+
+    /**
+     * Constructor for the Triangle class.
+     *
+     * @param point1 X and Y coordinate of the first point.
+     * @param point2 X and Y coordinate of the second point.
+     * @param point3 X and Y coordinate of the third point.
+     */
+    public Triangle(Point point1, Point point2, Point point3) {
+        this.point1 = point1;
+        this.point2 = point2;
+        this.point3 = point3;
+    }
+
+    /**
+     * Calculates the side lengths of the triangle
+     *
+     * @return An array containing the three side lengths
+     */
+    double[] getSides() {
+        double sideA = Math.sqrt(Math.pow(point2.X - point1.X, 2) + Math.pow(point2.Y - point1.Y, 2));
+        double sideB = Math.sqrt(Math.pow(point3.X - point2.X, 2) + Math.pow(point3.Y - point2.Y, 2));
+        double sideC = Math.sqrt(Math.pow(point3.X - point1.X, 2) + Math.pow(point3.Y - point1.Y, 2));
+
+        return new double[]{sideA, sideB, sideC};
+    }
+
+    /**
+     * Calculates the area of the triangle using Heron's formula
+     *
+     * @return The area of the triangle
+     */
+    public double getArea() {
+        double[] sides = getSides();
+        double semiPerimeter = 0.5 * (sides[0] + sides[1] + sides[2]);
+
+        return Math.sqrt(semiPerimeter * (semiPerimeter - sides[0]) * (semiPerimeter - sides[1]) * (semiPerimeter - sides[2]));
+    }
+
+    /**
+     * Calculates if the current triangle is congruent to another triangle.
+     *
+     * @param triangle triangle to compare congruency to
+     * @return boolean value if the triangles are congruent or not
+     */
+    public boolean isCongruent(Triangle triangle){
+        double[] trig1Side = getSides();
+        double[] trig2Side = triangle.getSides();
+
+        Arrays.sort(trig1Side);
+        Arrays.sort(trig2Side);
+
+        if (trig1Side == trig2Side){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Abstract method to calculate the circumference of a triangle
+     *
+     * @return The circumference of the triangle
+     */
+    public abstract double getCircumference();
+
+    @Override
+    public String toString() {
+        return "(" + point1.X + ", " + point1.Y + ") " + "(" + point2.X + ", " + point2.Y + ") " + "(" + point3.X + ", " + point3.Y + ")";
+    }
+}
