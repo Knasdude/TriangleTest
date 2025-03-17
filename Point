@@ -1,0 +1,20 @@
+package org.example;
+
+/**
+ * Represents a point in 2D space with x and y coordinates
+ */
+public class Point {
+    double X;
+    double Y;
+
+    /**
+     * Constructor for creating a point
+     *
+     * @param X X coordinate of the given point
+     * @param Y Y coordinate of the given point
+     */
+    public Point(double X, double Y) {
+        this.X = X;
+        this.Y = Y;
+    }
+}
