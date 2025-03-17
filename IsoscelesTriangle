@@ -1,0 +1,92 @@
+package org.example;
+
+public class IsoscelesTriangle extends Triangle implements Shape {
+
+
+    /**
+     * Constructor for an IsoscelesTriangle
+     *
+     * @param point1 X and Y coordinate of the first point
+     * @param point2 X and Y coordinate of the second point
+     * @param point3 X and Y coordinate of the third point
+     * @throws Exception If the triangle is not isosceles
+     */
+    public IsoscelesTriangle(Point point1, Point point2, Point point3) throws Exception {
+        super(point1, point2, point3);
+
+        double[] sides = this.getSides();
+
+        double sideA = sides[0];
+        double sideB = sides[1];
+        double sideC = sides[2];
+
+        if (!(sideA == sideB || sideA == sideC || sideB == sideC)) {
+            throw new Exception("Not an Isosceles triangle");
+        }
+    }
+
+    /**
+     * Calculates the circumference of the isosceles triangle
+     *
+     * @return The circumference of the triangle as a double
+     */
+    @Override
+    public double getCircumference() {
+        double[] sides = getSides();
+        return sides[0] + sides[1] + sides[2];
+    }
+
+    /**
+     * Identifies and returns the sides of the isosceles triangle with the base as the first element in the array
+     *
+     * @return A double array containing the sides of the isosceles triangle, with the base as the first element in the array
+     */
+    public double[] baseSide(){
+        double[] sides = getSides();
+        double a = sides[0];
+        double b = sides[1];
+        double c = sides[2];
+
+        if ((b != a) && (b != c)){
+            double temporary1 = sides[0];
+            sides[0] = sides[1];
+            sides[1] = temporary1;
+        }
+
+        else if ((c != a) && (c != b)){
+
+            double temporary2 = sides[0];
+            sides[0] = sides[2];
+            sides[2] = temporary2;
+        }
+        return sides;
+    }
+
+    /**
+     * Calculates the base angle of the isosceles triangle
+     *
+     * @return The base angle of the isosceles triangle in degrees
+     */
+    public double baseAngleCalculator(){
+        double[] sides = baseSide();
+
+        double baseSide = sides[0];
+        double likeSide = sides[1];
+        double likeSide2 = sides[2];
+
+        double baseAngleRadians = Math.acos((likeSide * likeSide + likeSide2 * likeSide2 - baseSide * baseSide) / (2 * likeSide * likeSide2));
+        double baseAngleDegrees = Math.toDegrees(baseAngleRadians);
+        return baseAngleDegrees;
+    }
+
+    /**
+     * Returns a string representation of the isosceles triangle, including the base angle
+     *
+     * @return A string representing the isosceles triangle with the base angle in degrees.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " with base angle: " + Math.round(baseAngleCalculator()) + " degrees";
+    }
+
+}
